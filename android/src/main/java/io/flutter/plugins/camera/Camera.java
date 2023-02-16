@@ -427,7 +427,7 @@ class Camera
 
           @Override
           public void onConfigured(@NonNull CameraCaptureSession session) {
-            try{
+      
              Log.i(TAG, "CameraCaptureSession onConfigured");
             // Camera was already closed.
             if (cameraDevice == null || captureSessionClosed) {
@@ -441,14 +441,7 @@ class Camera
 
             refreshPreviewCaptureSession(
                 onSuccessCallback, (code, message) -> dartMessenger.sendCameraErrorEvent(message));
-
-            } catch (CameraAccessException e) {
-              dartMessenger.sendCameraErrorEvent("cameraAccess."+  e.getMessage());
-            }catch (IllegalStateException e) {
-              dartMessenger.sendCameraErrorEvent("IllegalStateException."+  e.getMessage());
-            }catch (Exception e) {
-             dartMessenger.sendCameraErrorEvent("Exception."+  e.getMessage());
-            }
+      
           }
 
           @Override
@@ -529,6 +522,8 @@ class Camera
       onErrorCallback.onError("cameraAccess", "Camera is closed: " + e.getMessage());
     } catch (CameraAccessException e) {
       onErrorCallback.onError("cameraAccess", e.getMessage());
+    }catch (Exception e) {
+      result.error("Exception", e.getMessage(), null);
     }
   }
 
