@@ -523,7 +523,7 @@ class Camera
     } catch (CameraAccessException e) {
       onErrorCallback.onError("cameraAccess", e.getMessage());
     }catch (Exception e) {
-      result.error("Exception", e.getMessage(), null);
+      onErrorCallback.onError("Exception", e.getMessage());
     }
   }
 
